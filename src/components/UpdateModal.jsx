@@ -7,11 +7,17 @@ const UpdateModal = ({ course, dispatch, onClose }) => {
     name: course.name,
     position: course.position,
     workPlace: course.workPlace,
+    cardHeroImg: course.cardHeroImg,
+    profileImg: course.profileImg,
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, files } = e.target;
+    if (files) {
+      setFormData({ ...formData, [name]: URL.createObjectURL(files[0]) });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -115,6 +121,54 @@ const UpdateModal = ({ course, dispatch, onClose }) => {
               value={formData.workPlace}
               onChange={handleChange}
               required
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="update-cardHeroImg"
+              className="font-semibold text-sm"
+            >
+              Gambar Course
+            </label>
+            {formData.cardHeroImg && (
+              <img
+                src={formData.cardHeroImg}
+                alt="Preview Gambar Course"
+                className="w-20 h-full object-cover my-2"
+              />
+            )}
+            <input
+              type="file"
+              name="cardHeroImg"
+              id="update-cardHeroImg"
+              className="block w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#f64920] file:text-white file:cursor-pointer hover:file:bg-[#d93d18]"
+              accept="image/*"
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="update-profileImg"
+              className="font-semibold text-sm"
+            >
+              Gambar Profile
+            </label>
+            {formData.profileImg && (
+              <img
+                src={formData.profileImg}
+                alt="Preview Gambar Course"
+                className="w-20 h-full object-cover my-2"
+              />
+            )}
+
+            <input
+              type="file"
+              name="profileImg"
+              id="update-profileImg"
+              className="block w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#f64920] file:text-white file:cursor-pointer hover:file:bg-[#d93d18]"
+              accept="image/*"
+              onChange={handleChange}
             />
           </div>
 
